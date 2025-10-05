@@ -1,0 +1,17 @@
+@"
+# Ignore nặng
+*.exe
+*.zip
+*.rar
+*.7z
+*.mp4
+*.iso
+*.dll
+*.msi
+*.bin
+*.tar
+models/
+node_modules/
+__pycache__/
+.env
+"@ | Out-File -Encoding utf8 .gitignore

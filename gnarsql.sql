@@ -1,0 +1,29 @@
+﻿-- Bảng Users
+CREATE TABLE Users (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Username NVARCHAR(50) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(MAX) NOT NULL,
+    Email NVARCHAR(100) NOT NULL UNIQUE,
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- Bảng Chats
+CREATE TABLE Chats (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    UserId INT NOT NULL,
+    Title NVARCHAR(255),
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Chats_Users FOREIGN KEY (UserId) 
+        REFERENCES Users(Id) ON DELETE CASCADE
+);
+
+-- Bảng Messages
+CREATE TABLE Messages (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ChatId INT NOT NULL,
+    Role NVARCHAR(20) NOT NULL CHECK (Role IN ('user','assistant','system')),
+    Content NVARCHAR(MAX) NOT NULL,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Messages_Chats FOREIGN KEY (ChatId) 
+        REFERENCES Chats(Id) ON DELETE CASCADE
+);
